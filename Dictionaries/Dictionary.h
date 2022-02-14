@@ -129,7 +129,21 @@ inline bool Dictionary<TKey, TValue>::containsValue(const TValue object) const
 template<typename TKey, typename TValue>
 inline bool Dictionary<TKey, TValue>::tryGetValue(const TKey key, const TValue& value)
 {
-	return false;
+	if (containsKey(key))
+	{
+		if (containsValue(value))
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	else
+	{
+		return false;
+	}
 }
 
 template<typename TKey, typename TValue>
@@ -149,7 +163,33 @@ inline void Dictionary<TKey, TValue>::addItem(const TKey& key, const TValue& val
 template<typename TKey, typename TValue>
 inline bool Dictionary<TKey, TValue>::remove(const TKey key)
 {
-	return false;
+	bool wasRemoved = false;
+	bool wasFound = false;
+	Item* newItemList = new Item[m_count - 1];
+	Item* itemToRemove = nullptr;
+
+	for (int i = 0; i < m_count; i++)
+	{
+		if (m_items[i].key != key)
+		{
+			newItemList[i] = m_items[i];
+		}
+		else
+		{
+			itemToRemove = m_items[i];
+			wasFound= true
+		}
+	}
+
+	if (wasFound)
+	{
+		m_items = newItemList;
+		m_count--;
+		delete itemToRemove;
+		wasRemoved = true;
+	}
+
+	return wasRemoved;
 }
 
 template<typename TKey, typename TValue>
