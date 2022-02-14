@@ -37,7 +37,9 @@ public:
 	int getCount() const { return m_count; }
 
 
-	Dictionary<TKey, TValue> operator=(const Dictionary<TKey, TValue> other) const;
+	const Dictionary<TKey, TValue>& operator=(const Dictionary<TKey, TValue> other);
+
+	TValue operator[](const TKey key);
 
 	///<summary> creates a new item with the given key and value and adds it to the dictionary </summary>
 	///<param name = "key"> The key of the object trying to be added</param>
@@ -62,7 +64,7 @@ template<typename TKey, typename TValue>
 inline Dictionary<TKey, TValue>::Dictionary()
 {
 	m_count = 0;
-	m_items = new Item[m_count];
+	m_items = new Item[];
 }
 
 template<typename TKey, typename TValue>
@@ -83,7 +85,7 @@ inline void Dictionary<TKey, TValue>::clear()
 {
 	while (m_count != 0)
 	{
-		remove(m_items[0].key);
+		remove(m_items[0].itemKey);
 	}
 }
 
@@ -154,15 +156,18 @@ inline bool Dictionary<TKey, TValue>::tryGetValue(const TKey key, TValue& value)
 template<typename TKey, typename TValue>
 inline void Dictionary<TKey, TValue>::addItem(const TKey& key, const TValue& value)
 {
-	Item* newItemList = new Item[m_count + 1];
-	Item* item = Item{ key,value };
+	Item* newItemList[] = new Item[m_count + 1];
+	Item item = Item { key,value };
 
 	for (int i = 0; i < m_count; i++)
 	{
 		newItemList[i] = m_items[i];
 	}
 
-	newItemList[m_count + 1] = item;
+	newItemList[m_count] = item;
+
+	m_items = newItemList;
+	m_count++;
 }
 
 template<typename TKey, typename TValue>
@@ -171,18 +176,18 @@ inline bool Dictionary<TKey, TValue>::remove(const TKey key)
 	bool wasRemoved = false;
 	bool wasFound = false;
 	Item* newItemList = new Item[m_count - 1];
-	Item* itemToRemove = nullptr;
+	Item currItem;
 
 	for (int i = 0; i < m_count; i++)
 	{
-		if (m_items[i].key != key)
+		currItem = m_items[i];
+		if (key == currItem.itemKey)
 		{
-			newItemList[i] = m_items[i];
+			wasFound = true;
 		}
 		else
 		{
-			itemToRemove = m_items[i];
-			wasFound = true;
+			newItemList[i] = m_items[i];
 		}
 	}
 
@@ -190,7 +195,6 @@ inline bool Dictionary<TKey, TValue>::remove(const TKey key)
 	{
 		m_items = newItemList;
 		m_count--;
-		delete itemToRemove;
 		wasRemoved = true;
 	}
 
@@ -204,7 +208,7 @@ inline bool Dictionary<TKey, TValue>::remove(const TKey key, TValue& value)
 	{
 		for (int i = 0; i < m_count; i++)
 		{
-			if (m_items[i].key == key)
+			if (m_items[i].itemKey == key)
 			{
 				value = m_items[i].value;
 				remove(key);
