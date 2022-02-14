@@ -30,7 +30,7 @@ public:
 	///<summary> tries to find the item that matches the given key </summary>
 	///<param name = "key"> The key of the object trying to be found</param>
 	///<param name = "value"> The value of the object trying to be found</param>
-	bool tryGetValue(const TKey key, const TValue& value);
+	bool tryGetValue(const TKey key, TValue& value);
 
 	///<summary> tries to find the item that matches the given key </summary>
 	///<returns> m_count integer indicating the number of </returns>
@@ -81,7 +81,10 @@ inline Dictionary<TKey, TValue>::~Dictionary()
 template<typename TKey, typename TValue>
 inline void Dictionary<TKey, TValue>::clear()
 {
-
+	while (m_count != 0)
+	{
+		remove(m_items[0].key);
+	}
 }
 
 template<typename TKey, typename TValue>
@@ -127,18 +130,20 @@ inline bool Dictionary<TKey, TValue>::containsValue(const TValue object) const
 }
 
 template<typename TKey, typename TValue>
-inline bool Dictionary<TKey, TValue>::tryGetValue(const TKey key, const TValue& value)
+inline bool Dictionary<TKey, TValue>::tryGetValue(const TKey key, TValue& value)
 {
 	if (containsKey(key))
 	{
-		if (containsValue(value))
+		for (int i = 0; i < m_count; i++)
 		{
-			return true;
+			if (m_items[i].key == key)
+			{
+				value = m_items[i].value;
+				return true;
+			}
 		}
-		else
-		{
-			return false;
-		}
+
+		return false;
 	}
 	else
 	{
@@ -177,7 +182,7 @@ inline bool Dictionary<TKey, TValue>::remove(const TKey key)
 		else
 		{
 			itemToRemove = m_items[i];
-			wasFound= true
+			wasFound = true;
 		}
 	}
 
@@ -195,5 +200,22 @@ inline bool Dictionary<TKey, TValue>::remove(const TKey key)
 template<typename TKey, typename TValue>
 inline bool Dictionary<TKey, TValue>::remove(const TKey key, TValue& value)
 {
-	return false;
+	if (containsKey(key))
+	{
+		for (int i = 0; i < m_count; i++)
+		{
+			if (m_items[i].key == key)
+			{
+				value = m_items[i].value;
+				remove(key);
+				return true;
+			}
+		}
+
+		return false;
+	}
+	else
+	{
+		return false;
+	}
 }
