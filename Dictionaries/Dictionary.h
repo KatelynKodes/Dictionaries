@@ -64,7 +64,7 @@ template<typename TKey, typename TValue>
 inline Dictionary<TKey, TValue>::Dictionary()
 {
 	m_count = 0;
-	m_items = new Item[];
+	m_items = nullptr;
 }
 
 template<typename TKey, typename TValue>
@@ -134,29 +134,52 @@ inline bool Dictionary<TKey, TValue>::containsValue(const TValue object) const
 template<typename TKey, typename TValue>
 inline bool Dictionary<TKey, TValue>::tryGetValue(const TKey key, TValue& value)
 {
-	if (containsKey(key))
+	for (int i = 0; i < m_count; i++)
 	{
-		for (int i = 0; i < m_count; i++)
+		if (m_items[i].itemKey == key)
 		{
-			if (m_items[i].key == key)
-			{
-				value = m_items[i].value;
-				return true;
-			}
+			value = m_items[i].itemValue;
+			return true;
 		}
+	}
 
-		return false;
-	}
-	else
+	return false;
+}
+
+template<typename TKey, typename TValue>
+inline const Dictionary<TKey, TValue>& Dictionary<TKey, TValue>::operator=(const Dictionary<TKey, TValue> other)
+{
+	Dictionary<TKey, TValue> copiedDict = Dictionary<TKey, TValue>();
+
+	for (int i = 0; i < other.m_count; i++)
 	{
-		return false;
+		copiedDict.addItem(other.m_items[i].itemKey, other.m_items[i].itemValue);
 	}
+	copiedDict.m_count = other.m_count;
+
+	return this;
+}
+
+template<typename TKey, typename TValue>
+inline TValue Dictionary<TKey, TValue>::operator[](const TKey key)
+{
+	TValue value = TValue();
+
+	for (size_t i = 0; i < m_count; i++)
+	{
+		if (m_items[i].itemKey == key)
+		{
+			value = m_items[i].itemValue;
+		}
+	}
+
+	return value;
 }
 
 template<typename TKey, typename TValue>
 inline void Dictionary<TKey, TValue>::addItem(const TKey& key, const TValue& value)
 {
-	Item* newItemList[] = new Item[m_count + 1];
+	Item* newItemList = new Item[m_count + 1];
 	Item item = Item { key,value };
 
 	for (int i = 0; i < m_count; i++)
@@ -175,27 +198,31 @@ inline bool Dictionary<TKey, TValue>::remove(const TKey key)
 {
 	bool wasRemoved = false;
 	bool wasFound = false;
-	Item* newItemList = new Item[m_count - 1];
 	Item currItem;
-
-	for (int i = 0; i < m_count; i++)
+	
+	if (m_count != 0)
 	{
-		currItem = m_items[i];
-		if (key == currItem.itemKey)
-		{
-			wasFound = true;
-		}
-		else
-		{
-			newItemList[i] = m_items[i];
-		}
-	}
+		Item* newItemList = new Item[m_count - 1];
 
-	if (wasFound)
-	{
-		m_items = newItemList;
-		m_count--;
-		wasRemoved = true;
+		for (int i = 0; i < m_count; i++)
+		{
+			currItem = m_items[i];
+			if (key == currItem.itemKey)
+			{
+				wasFound = true;
+			}
+			else
+			{
+				newItemList[i] = m_items[i];
+			}
+		}
+
+		if (wasFound)
+		{
+			m_items = newItemList;
+			m_count--;
+			wasRemoved = true;
+		}
 	}
 
 	return wasRemoved;
@@ -204,22 +231,15 @@ inline bool Dictionary<TKey, TValue>::remove(const TKey key)
 template<typename TKey, typename TValue>
 inline bool Dictionary<TKey, TValue>::remove(const TKey key, TValue& value)
 {
-	if (containsKey(key))
+	for (int i = 0; i < m_count; i++)
 	{
-		for (int i = 0; i < m_count; i++)
+		if (m_items[i].itemKey == key)
 		{
-			if (m_items[i].itemKey == key)
-			{
-				value = m_items[i].value;
-				remove(key);
-				return true;
-			}
+			value = m_items[i].itemValue;
+			remove(key);
+			return true;
 		}
+	}
 
-		return false;
-	}
-	else
-	{
-		return false;
-	}
+	return false;
 }
