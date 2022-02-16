@@ -149,15 +149,14 @@ inline bool Dictionary<TKey, TValue>::tryGetValue(const TKey key, TValue& value)
 template<typename TKey, typename TValue>
 inline const Dictionary<TKey, TValue>& Dictionary<TKey, TValue>::operator=(const Dictionary<TKey, TValue> other)
 {
-	Dictionary<TKey, TValue> copiedDict = Dictionary<TKey, TValue>();
+	clear();
 
 	for (int i = 0; i < other.m_count; i++)
 	{
-		copiedDict.addItem(other.m_items[i].itemKey, other.m_items[i].itemValue);
+		addItem(other.m_items[i].itemKey, other.m_items[i].itemValue);
 	}
-	copiedDict.m_count = other.m_count;
 
-	return this;
+	return *this;
 }
 
 template<typename TKey, typename TValue>

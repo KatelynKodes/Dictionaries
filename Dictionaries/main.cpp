@@ -51,6 +51,13 @@ int main()
 	Dictionary<int, int>* dictionary = new Dictionary<int, int>();
 	Dictionary<int, int>* dictionary2 = new Dictionary<int, int>();
 
+	dictionary2->addItem(1, 73482);
+	dictionary2->addItem(2, 38284);
+	dictionary2->addItem(3, 32478);
+	dictionary2->addItem(4, 37238);
+	dictionary2->addItem(5, 49309);
+
+
 	dictionary->addItem(0, 826);
 	dictionary->addItem(1, 748);
 	dictionary->remove(1);
@@ -60,13 +67,16 @@ int main()
 
 	*dictionary = *dictionary2;
 
+	dictionary2->clear();
+	int number;
+
+	std::cout << number;
+
 	while (playerInput != -1)
 	{
 		valueInput = NULL;
 		keyInput = NULL;
 
-		system("cls");
-		print(dictionary);
 		countDictionary(dictionary);
 		std::cout << "[1] Add Item \n[2] Remove Item \n[3] Remove Value \n[4] Check for Key \n[5] Check for Value\n"<<
 					 "[6] Get Value\n[7] Clear Dictionary \n[8] Set to new Dictionary" <<std::endl;
