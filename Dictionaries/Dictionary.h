@@ -164,13 +164,7 @@ inline TValue Dictionary<TKey, TValue>::operator[](const TKey key)
 {
 	TValue value = TValue();
 
-	for (size_t i = 0; i < m_count; i++)
-	{
-		if (m_items[i].itemKey == key)
-		{
-			value = m_items[i].itemValue;
-		}
-	}
+	tryGetValue(key, value);
 
 	return value;
 }

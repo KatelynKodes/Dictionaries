@@ -65,18 +65,12 @@ int main()
 	dictionary->addItem(3, 674);
 	dictionary->addItem(4, 754);
 
-	*dictionary = *dictionary2;
-
-	dictionary2->clear();
-	int number;
-
-	std::cout << number;
-
 	while (playerInput != -1)
 	{
 		valueInput = NULL;
 		keyInput = NULL;
 
+		print(dictionary);
 		countDictionary(dictionary);
 		std::cout << "[1] Add Item \n[2] Remove Item \n[3] Remove Value \n[4] Check for Key \n[5] Check for Value\n"<<
 					 "[6] Get Value\n[7] Clear Dictionary \n[8] Set to new Dictionary" <<std::endl;
