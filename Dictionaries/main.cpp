@@ -74,7 +74,7 @@ int main()
 		print(dictionary);
 		countDictionary(dictionary);
 		std::cout << "[1] Add Item \n[2] Remove Item \n[3] Remove Value \n[4] Check for Key \n[5] Check for Value\n"<<
-					 "[6] Get Value\n[7] Clear Dictionary \n[8] Set to new Dictionary" <<std::endl;
+					 "[6] Get Value\n[7] Clear Dictionary \n[8] Set to new Dictionary\n[-1] Exit program" <<std::endl;
 		std::cin >> playerInput;
 
 		switch (playerInput)
