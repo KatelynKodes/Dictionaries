@@ -70,6 +70,7 @@ int main()
 		valueInput = NULL;
 		keyInput = NULL;
 
+		system("cls");
 		print(dictionary);
 		countDictionary(dictionary);
 		std::cout << "[1] Add Item \n[2] Remove Item \n[3] Remove Value \n[4] Check for Key \n[5] Check for Value\n"<<
@@ -84,8 +85,6 @@ int main()
 			inputKey(keyInput, "What will be the key associated with that value?");
 
 			dictionary->addItem(keyInput, valueInput);
-
-			std::cin.get();
 			break;
 		case 2:
 
@@ -95,8 +94,6 @@ int main()
 				std:: cout << "Item with the key " << keyInput <<" was successfully removed" << std::endl;
 			else
 				std::cout << "Item with the key " << keyInput << " was unable to be removed" << std::endl;
-
-			std::cin.get();
 			break;
 
 		case 3:
@@ -104,8 +101,6 @@ int main()
 			inputKey(keyInput, "What key is the value associated with?");
 
 			dictionary->remove(keyInput, valueInput);
-
-			std::cin.get();
 			break;
 		case 4:
 			inputKey(keyInput, "What is the key you want to search for?");
