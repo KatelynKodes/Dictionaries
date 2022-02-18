@@ -16,14 +16,15 @@
     - 7 key: Clears the dictionary from all it's value.
     - 8 key: Sets the current dictionary to a new, empty dictionary
 2. **Output Information**
-    - 
+    - If the user decides to remove or add an item to the dictionary, the dictionary is altered to include or not include whatever was attempted to be removed or added, then it will display the current list of values in the dictionary on the screen. If the other wishes to find an item in the dictionary of a certain key or value, the dictionary is searched though and the value is found if the item exists inside of it. A prompt is then displayed on the screen indicating what was found. If the value or key does not exist in the dictionary a string is returned indicating the value or key could not be found.
 3. **User Interface Information**
     - The interface displays printed values of the dictionary and a string contianing the current number of items in the dictionary as well as a list of inputs the user can call. As the user calls the inputs on the screen the dictionary will either change according to what the user does to the array or will return either a key or value the user is trying to search for.
 
 ## II. Design
 
 1. _System Architecture_
-    - 
+    - The dictionary class is a template class that has typenames of TKey and TValue, with these typenames the class is more accessible to multiple types such as characters, integers, and floats. Each item in the Dictionary is created with a struct, this struct contains a TKey variable where the item key is stored and a TValue variable storing the items key. These items are then stored into a pointer in the dictionary class that points to a Items array.  From there, the dictionary is capable of iterating through the Item array as well as accessing and reading its items. This allows the dictionary class to be the sole responsible class for accessing and reading all the items in the list. There is also an integer value indicating the dictionaries length that increments as items are added to the item array, and decrements as items are removed from the item array.
+    
 2. _Object Information_
     - **FileName**: Dictionary.h
         - **Class Name**: Dictionary
