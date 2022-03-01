@@ -172,18 +172,31 @@ inline TValue Dictionary<TKey, TValue>::operator[](const TKey key)
 template<typename TKey, typename TValue>
 inline void Dictionary<TKey, TValue>::addItem(const TKey& key, const TValue& value)
 {
-	Item* newItemList = new Item[m_count + 1];
-	Item item = Item { key,value };
-
-	for (int i = 0; i < m_count; i++)
+	//Check if the dictionary already contains the key
+	if (containsKey(key))
 	{
-		newItemList[i] = m_items[i];
+		//Loop through the items list again
+		for (int i = 0; i < m_count; i++)
+			//if the items key is equal to the key passed into the method
+			if (m_items[i].itemKey == key)
+				//sets the item at that index's value to be that value
+				m_items[i].itemValue = value;
 	}
+	else
+	{
+		Item* newItemList = new Item[m_count + 1];
+		Item item = Item{ key,value };
 
-	newItemList[m_count] = item;
+		for (int i = 0; i < m_count; i++)
+		{
+			newItemList[i] = m_items[i];
+		}
 
-	m_items = newItemList;
-	m_count++;
+		newItemList[m_count] = item;
+
+		m_items = newItemList;
+		m_count++;
+	}
 }
 
 template<typename TKey, typename TValue>

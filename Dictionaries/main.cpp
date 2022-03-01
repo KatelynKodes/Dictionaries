@@ -64,13 +64,13 @@ int main()
 	dictionary->addItem(2, 126);
 	dictionary->addItem(3, 674);
 	dictionary->addItem(4, 754);
+	dictionary->addItem(8, 1739);
 
 	while (playerInput != -1)
 	{
 		valueInput = NULL;
 		keyInput = NULL;
 
-		system("cls");
 		print(dictionary);
 		countDictionary(dictionary);
 		std::cout << "[1] Add Item \n[2] Remove Item \n[3] Remove Value \n[4] Check for Key \n[5] Check for Value\n"<<
@@ -97,10 +97,14 @@ int main()
 			break;
 
 		case 3:
-			inputValue(valueInput, "What value do you want to remove from the dictionary?");
 			inputKey(keyInput, "What key is the value associated with?");
 
-			dictionary->remove(keyInput, valueInput);
+			if (dictionary->remove(keyInput, valueInput))
+				std::cout << "Item value removed successfully" << std::endl;
+			else
+				std::cout << "Item value cannot be removed" << std::endl;
+
+			std::cin.get();
 			break;
 		case 4:
 			inputKey(keyInput, "What is the key you want to search for?");
@@ -112,7 +116,6 @@ int main()
 
 			std::cin.get();
 			break;
-
 		case 5:
 			inputValue(valueInput, "What is the value you want to search for?");
 
@@ -123,7 +126,6 @@ int main()
 
 			std::cin.get();
 			break;
-
 		case 6:
 			inputValue(valueInput, "What is the value you want to get?");
 			inputKey(keyInput, "What is the key associated with this value?");
@@ -135,13 +137,11 @@ int main()
 
 			std::cin.get();
 			break;
-
 		case 7:
 			dictionary->clear();
 			std::cout << "Dictionary cleared";
 			std::cin.get();
 			break;
-
 		case 8:
 			Dictionary<int, int>* newDictionary = new Dictionary<int,int>();
 
