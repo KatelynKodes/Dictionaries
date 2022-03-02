@@ -80,15 +80,14 @@ int main()
 		switch (playerInput)
 		{
 		case 1:
-			inputValue(valueInput, "What will be the value put into the dictionary?");
-
-			inputKey(keyInput, "What will be the key associated with that value?");
+			keyInput = rand() % 100;
+			valueInput = rand() % 100;
 
 			dictionary->addItem(keyInput, valueInput);
+			std::cout << "The value " << valueInput << "was inserted with a key of " << keyInput << std::endl;
 			break;
 		case 2:
-
-			inputKey(keyInput, "What is the key of the item you want to remove from the dictionary?");
+			keyInput = rand() % 100;
 
 			if (dictionary->remove(keyInput))
 				std:: cout << "Item with the key " << keyInput <<" was successfully removed" << std::endl;
@@ -97,7 +96,7 @@ int main()
 			break;
 
 		case 3:
-			inputKey(keyInput, "What key is the value associated with?");
+			keyInput = rand() % 100;
 
 			if (dictionary->remove(keyInput, valueInput))
 				std::cout << "Item value removed successfully" << std::endl;
@@ -107,7 +106,7 @@ int main()
 			std::cin.get();
 			break;
 		case 4:
-			inputKey(keyInput, "What is the key you want to search for?");
+			keyInput = rand() % 100;
 
 			if (dictionary->containsKey(keyInput))
 				std::cout << "Key found, " << keyInput << " contains a value of " << dictionary->operator[](keyInput) << std::endl;
@@ -117,7 +116,7 @@ int main()
 			std::cin.get();
 			break;
 		case 5:
-			inputValue(valueInput, "What is the value you want to search for?");
+			valueInput = rand() % 100;
 
 			if (dictionary->containsValue(valueInput))
 				std::cout << "Value found"<< std::endl;
@@ -127,8 +126,8 @@ int main()
 			std::cin.get();
 			break;
 		case 6:
-			inputValue(valueInput, "What is the value you want to get?");
-			inputKey(keyInput, "What is the key associated with this value?");
+			valueInput = rand() % 100;
+			keyInput = rand() % 100;
 
 			if (dictionary->tryGetValue(keyInput, valueInput))
 				std::cout << "Value found" << std::endl;
