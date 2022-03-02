@@ -143,9 +143,7 @@ int main()
 			std::cin.get();
 			break;
 		case 8:
-			Dictionary<int, int>* newDictionary = new Dictionary<int,int>();
-
-			dictionary = newDictionary;
+			dictionary = dictionary2;
 			std::cout << "The dictionary has been replaced"<< std::endl;
 			std::cin.get();
 			break;
